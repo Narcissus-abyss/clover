@@ -7,9 +7,10 @@ verify_ssl = true
 
 [packages]
 arrow = "*"
-nonebot = "*"
 redis = "*"
 xmltodict = "*"
+aredis = "*"
+nonebot2 = "*"
 
 [requires]
 python_version = "3.8"
