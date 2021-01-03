@@ -4,12 +4,12 @@ from nonebot import (
     on_message,
     logger
 )
-from nonebot.rule import to_me
+from nonebot.rule import to_me, startswith
 from nonebot.adapters import Bot
 from nonebot.adapters.cqhttp import MessageEvent
 from .data_source import redis_client
 
-add = on_command("add", rule=to_me(), priority=5)
+add = on_command("add", rule=startswith("add"), priority=5)
 
 
 @add.handle()
@@ -48,7 +48,7 @@ async def _(bot: Bot, event: MessageEvent):
         await del_event.finish("我可不想忘记[CQ:face,id=14]")
 
 
-list_event = on_command("list", rule=to_me(), priority=5)
+list_event = on_command("list", rule=startswith("list"), priority=5)
 
 
 @list_event.handle()
@@ -56,7 +56,7 @@ async def _(bot: Bot, event: MessageEvent):
     stripped_arg = event.raw_message.split()[1:]
     logger.debug(f"{stripped_arg}, {len(stripped_arg)}")
     if stripped_arg and len(stripped_arg) == 1:
-        res = await redis_client.smembers(stripped_arg)
+        res = await redis_client.smembers(stripped_arg[0])
         await list_event.finish(f"{res}")
 
 
