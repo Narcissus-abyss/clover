@@ -2,17 +2,15 @@ import httpx
 import io
 from nonebot import (
     on_message,
-    logger
 )
 from nonebot.adapters import Bot
-from nonebot.rule import to_me
 from nonebot.adapters.cqhttp import MessageEvent
 from nonebot.adapters.cqhttp.message import MessageSegment
 from PIL import Image
 from .data_source import predict
 from typing import Dict, List
 
-recognition = on_message(rule=to_me(), priority=5)
+recognition = on_message(priority=5)
 
 
 @recognition.handle()
