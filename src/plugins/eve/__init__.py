@@ -6,7 +6,8 @@ from nonebot import (
 )
 from nonebot.rule import to_me, startswith
 from nonebot.adapters import Bot
-from nonebot.adapters.cqhttp import MessageEvent
+from nonebot.adapters.cqhttp import MessageEvent, Message
+from nonebot.adapters.cqhttp.message import MessageSegment
 from .data_source import redis_client
 
 add = on_command("add", rule=startswith("add"), priority=5)
@@ -23,7 +24,6 @@ async def _(bot: Bot, event: MessageEvent):
         await add.finish('咕咕鸟从来不骗人, 不能说这句')
         return
     else:
-        logger.debug(stripped_arg)
         keyword, sentence = stripped_arg[0], ''.join(
             str(i) for i in stripped_arg[1:])
         await redis_client.sadd(keyword, sentence)
@@ -60,13 +60,18 @@ async def _(bot: Bot, event: MessageEvent):
         await list_event.finish(f"{res}")
 
 
-group = on_message(block=False)
+group = on_message(block=False, priority=5)
 
 
 @group.handle()
 async def _(bot: Bot, event: MessageEvent):
+    msg: Message = event.get_message()
+
+    for i in msg:
+        if i.type == "image":
+            return
+
     sentence = event.raw_message.strip()
-    logger.debug(event.get_message())
 
     if sentence.split()[0] in ['add', 'list', 'del', 'help', 'info', 'jita',
                                '签到', '兑换', '积分', '抽奖', '柏青哥', '积分池']:

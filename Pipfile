@@ -11,6 +11,13 @@ redis = "*"
 xmltodict = "*"
 aredis = "*"
 nonebot2 = "*"
+pillow = "*"
+efficientnet = "*"
+transforms = "*"
+touch = "*"
+torch = "*"
+efficientnet-pytorch = "*"
+torchvision = "*"
 
 [requires]
 python_version = "3.8"
