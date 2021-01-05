@@ -4,7 +4,7 @@ from nonebot import (
     on_message,
 )
 from nonebot.adapters import Bot
-from nonebot.adapters.cqhttp import MessageEvent
+from nonebot.adapters.cqhttp import MessageEvent, GroupMessageEvent
 from nonebot.adapters.cqhttp.message import MessageSegment
 from PIL import Image
 from .data_source import predict
@@ -14,7 +14,7 @@ recognition = on_message(priority=5)
 
 
 @recognition.handle()
-async def _(bot: Bot, event: MessageEvent):
+async def _(bot: Bot, event: GroupMessageEvent):
     msg: MessageSegment = event.get_message().pop()
     if msg.type == "image":
         async with httpx.AsyncClient() as client:
