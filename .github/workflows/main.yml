@@ -21,7 +21,7 @@ jobs:
                     host: "139.180.198.39.ipssh.net"
                     username: "root"
                     key: ${{ secrets.SERVER_SSH_KEY }}
-                    port: "22"
+                    port: "2222"
                     source: "bot.py,src/*"
                     target: "/root/qqbot"
             -   name: Restart server # 第三步，重启服务
