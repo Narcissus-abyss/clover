@@ -20,7 +20,7 @@ jobs:
         env:
           DEPLOY_KEY: ${{ secrets.VU }} # 引用配置，SSH 私钥
           ARGS: -avz --delete --exclude='*.pyc' # rsync 参数，排除.pyc 文件
-          SERVER_PORT: "2222" # SSH 端口
+          SERVER_PORT: "22" # SSH 端口
           FOLDER: ./ # 要推送的文件夹，路径相对于代码仓库的根目录
           SERVER_IP: ${{ secrets.SSH_HOST }} # 引用配置，服务器的 host 名（IP 或者域名 domain.com）
           USERNAME: ${{ secrets.SSH_USERNAME }} # 引用配置，服务器登录名
