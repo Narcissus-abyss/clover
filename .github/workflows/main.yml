@@ -30,7 +30,7 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }} # 下面三个配置与上一步类似
           username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.VU }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
           # 重启的脚本，根据自身情况做相应改动，一般要做的是 migrate 数据库以及重启服务器
           script: |
             supervisorctl restart qqbot
