@@ -18,10 +18,10 @@ jobs:
             -   name: copy file via ssh password
                 uses: appleboy/scp-action@master
                 with:
-                    host: ${{ secrets.SSH_HOST }}
-                    username: ${{ secrets.SSH_USERNAME }}
+                    host: "139.180.198.39.ipssh.net"
+                    username: "root"
                     key: ${{ secrets.SERVER_SSH_KEY }}
-                    port: 22
+                    port: "22"
                     source: "bot.py,src/*"
                     target: "/root/qqbot"
             -   name: Restart server # 第三步，重启服务
