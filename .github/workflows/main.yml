@@ -18,7 +18,7 @@ jobs:
       - name: Deploy to Server # 第二步，rsync 推文件
         uses: AEnterprise/rsync-deploy@v1.0 # 使用别人包装好的步骤镜像
         env:
-          DEPLOY_KEY: ${{ secrets.VU }} # 引用配置，SSH 私钥
+          DEPLOY_KEY: ${{ secrets.SERVER_SSH_KEY }} # 引用配置，SSH 私钥
           ARGS: -avz --delete --exclude='*.pyc' # rsync 参数，排除.pyc 文件
           SERVER_PORT: "22" # SSH 端口
           FOLDER: ./ # 要推送的文件夹，路径相对于代码仓库的根目录
