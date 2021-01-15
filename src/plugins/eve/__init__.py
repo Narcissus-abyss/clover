@@ -7,7 +7,6 @@ from nonebot import (
 from nonebot.rule import to_me, startswith
 from nonebot.adapters import Bot
 from nonebot.adapters.cqhttp import MessageEvent, Message
-from nonebot.adapters.cqhttp.message import MessageSegment
 from .data_source import redis_client
 
 add = on_command("add", rule=startswith("add"), priority=5)

@@ -4,7 +4,7 @@ from nonebot import (
     on_message,
 )
 from nonebot.adapters import Bot
-from nonebot.adapters.cqhttp import MessageEvent, GroupMessageEvent
+from nonebot.adapters.cqhttp import GroupMessageEvent
 from nonebot.adapters.cqhttp.message import MessageSegment
 from PIL import Image
 from .data_source import predict
