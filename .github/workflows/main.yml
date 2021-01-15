@@ -32,4 +32,6 @@ jobs:
                     key: ${{ secrets.SERVER_SSH_KEY }}
                     # 重启的脚本，根据自身情况做相应改动，一般要做的是 migrate 数据库以及重启服务器
                     script: |
+                        cp /var/www/abyss/EfficientNet_0.82.pth /root/qq_bot/src/plugins/imageRecognition
+                        cp /var/www/abyss/pytorch_model.bin /root/qq_bot/GPT2-chitchat/dialogue_model_path
                         supervisorctl restart qqbot
