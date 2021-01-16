@@ -8,7 +8,7 @@ from aredis import StrictRedis
 redis_client = StrictRedis(host='localhost', port=6379, decode_responses=True, db=1)
 
 
-save_chat_data = on_message(priority=5)
+save_chat_data = on_message(priority=5, block=False)
 
 
 @save_chat_data.handle()

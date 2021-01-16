@@ -7,7 +7,7 @@ from .model import (
     predict
 )
 
-chat = on_message(priority=5)
+chat = on_message(priority=5, block=False)
 
 
 @chat.handle()
