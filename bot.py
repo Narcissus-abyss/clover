@@ -9,7 +9,10 @@ driver = nonebot.get_driver()
 driver.register_adapter("cqhttp", CQHTTPBot)
 
 nonebot.load_builtin_plugins()
-nonebot.load_plugins("src/plugins")
+nonebot.load_plugin("src.plugins.eve")
+nonebot.load_plugin("src.plugins.clover")
+nonebot.load_plugin("src.plugins.chat_data")
+
 
 app = nonebot.get_asgi()
 
