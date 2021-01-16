@@ -20,6 +20,7 @@ async def _(bot: Bot, event: GroupMessageEvent):
             with open(f'/var/www/chat_data/{group_id}_chat.log', 'a+') as file:
                 if not await redis_client.exists(group_id):
                     await redis_client.set(group_id, True)
-                    await redis_client.expire(group_id, 60)
                     file.write("\n")
                 file.write(f"{item.data.get('text')}\n")
+                await redis_client.expire(group_id, 60)
+
