@@ -34,4 +34,5 @@ jobs:
                     script: |
                         cp /var/www/abyss/EfficientNet_0.82.pth /root/qq_bot/src/plugins/imageRecognition
                         cp /var/www/abyss/pytorch_model.bin /root/qq_bot/GPT2-chitchat/dialogue_model_path
+                        cp /var/www/abyss/go-cqhttp /root/qq_bot
                         supervisorctl restart qqbot
