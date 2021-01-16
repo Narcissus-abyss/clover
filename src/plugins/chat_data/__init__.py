@@ -22,4 +22,4 @@ async def _(bot: Bot, event: GroupMessageEvent):
                     await redis_client.set(group_id, True)
                     await redis_client.expire(group_id, 60)
                     file.write("\n")
-                file.write(f"{str(msg)}\n")
+                file.write(f"{item.text}\n")
