@@ -1,7 +1,6 @@
 import transformers
 import torch
 import os
-import json
 import random
 import numpy as np
 import argparse
@@ -12,16 +11,14 @@ from torch.nn import DataParallel
 import logging
 from transformers.models.gpt2.modeling_gpt2 import GPT2Config, GPT2LMHeadModel
 from transformers import BertTokenizer
-from os.path import join, exists
-from itertools import zip_longest, chain
+from os.path import join
 from dataset import MyDataset
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import DataLoader
 from torch.nn import CrossEntropyLoss
 from sklearn.model_selection import train_test_split
 
 PAD = '[PAD]'
 pad_id = 0
-logger = None
 
 
 def setup_train_args():
@@ -41,7 +38,7 @@ def setup_train_args():
     parser.add_argument('--log_path', default='data/training.log', type=str, required=False, help='训练日志存放位置')
     parser.add_argument('--raw', action='store_true', help='是否对原始训练语料做tokenize。若尚未对原始训练语料进行tokenize，则指定该参数')
     parser.add_argument('--epochs', default=10, type=int, required=False, help='训练的轮次')
-    parser.add_argument('--batch_size', default=8, type=int, required=False, help='训练batch size')
+    parser.add_argument('--batch_size', default=32, type=int, required=False, help='训练batch size')
     parser.add_argument('--lr', default=1.5e-4, type=float, required=False, help='学习率')
     parser.add_argument('--warmup_steps', default=2000, type=int, required=False, help='warm up步数')
     parser.add_argument('--log_step', default=1, type=int, required=False, help='多少步汇报一次loss')
@@ -112,7 +109,7 @@ def create_model(args, vocab_size):
     if args.pretrained_model:  # 如果指定了预训练的GPT2模型
         model = GPT2LMHeadModel.from_pretrained(args.pretrained_model)
     else:  # 若没有指定预训练模型，则初始化模型
-        model_config = transformers.modeling_gpt2.GPT2Config.from_json_file(args.model_config)
+        model_config = GPT2Config.from_json_file(args.model_config)
         model = GPT2LMHeadModel(config=model_config)
     # 根据tokenizer的vocabulary调整GPT2模型的voca的大小
     model.resize_token_embeddings(vocab_size)
@@ -260,7 +257,8 @@ def train(model, device, train_list, multi_gpu, args):
 
     # 设置优化器，并且在初始训练时，使用warmup策略
     optimizer = transformers.AdamW(model.parameters(), lr=args.lr, correct_bias=True)
-    scheduler = transformers.WarmupLinearSchedule(optimizer, warmup_steps=args.warmup_steps, t_total=total_steps)
+    scheduler = transformers.get_linear_schedule_with_warmup(optimizer, num_warmup_steps=args.warmup_steps,
+                                                             num_training_steps=total_steps)
 
     logger.info('starting training')
     # 用于统计每次梯度累计的loss
