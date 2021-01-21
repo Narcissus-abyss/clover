@@ -81,4 +81,4 @@ def predict(text: str) -> str:
 
 
 if __name__ == "__main__":
-    print(predict("好了, 我把图片识别的关掉了, 2g的内存一下子用掉了1.9"))
+    print(predict("空山新雨后"))
